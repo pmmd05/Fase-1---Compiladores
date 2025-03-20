@@ -38,6 +38,11 @@ const App = () => {
         alt="Logo Azul" 
       />
 
+      <div class="top-rigth">
+        <p class="textio">Fase 1 - Proyecto Compiladores</p>
+      </div>
+
+
       <div className="container">        
         {/* Panel Izquierdo */}
         <div className="panel left-panel">
