@@ -10,20 +10,20 @@ public enum TokenType {
     IF, ELSE, FOR, WHILE, DO, RETURN, ESCRIBIR, ESCRIBIRLINEA, LONGITUD, ACADENA,
     
     // Identificador y literales
-    IDENTIFIER, NUMERO, REAL_NUMBER, STRING, CHAR,
+    IDENTIFICADOR, NUMERO, REAL_NUMBER, STRING, CHAR,
     
     // Operadores aritméticos y relacionales
-    PLUS, MINUS, MULTIPLY, DIVIDE, POWER, MODULO,
-    INCREMENT, DECREMENT, EQUALITY, GREATER_THAN, LESS_THAN, GREATER_EQUAL, LESS_EQUAL, NOT_EQUAL,
+    SUMA, MENOS, MULTIPLICAR, DIVIDIR, POTENCIA, MODULO,
+    INCREMENTO, DECREMENTO, ASIGNADOR, MENOR_QUE, MAYOR_QUE, MAYOR_IGUAL, MENOR_IGUAL, NO_IGUAL, IGUALDAD,
     
     // Operadores lógicos
-    LOGICAL_AND, LOGICAL_OR, LOGICAL_NOT,
+    AND, OR, NOT,
     
     // Delimitadores y signos especiales
-    SEMICOLON, COMMA, OPEN_PAREN, CLOSE_PAREN, OPEN_BRACE, CLOSE_BRACE,
+    PUNTO_COMA, COMA, PAREN_AB, PAREN_CER, LLAVE_AB, LLAVE_CER,
     
     // Comentarios (se pueden manejar de forma separada o simplemente ignorarlos en la salida)
-    COMMENT,
+    COMENTARIO,
     
     // Error o token no reconocido
     ERROR,

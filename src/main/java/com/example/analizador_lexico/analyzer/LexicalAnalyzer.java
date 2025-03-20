@@ -23,7 +23,7 @@ public class LexicalAnalyzer {
     private Tabla symbolTable;
     
     // Mapa de palabras reservadas (en minúsculas para facilitar la insensibilidad a mayúsculas)
-    private Map<String, TokenType> reservedWords;
+    private Map<String, TokenType> palabrasReservadas;
     
     /*
      * Nota sobre las expresiones:
@@ -32,33 +32,33 @@ public class LexicalAnalyzer {
      *     \" (comilla doble), \n, \t, \r, \b, \f y \\.
      * - El patrón para números incluye un lookahead negativo para evitar que se unan con letras.
      */
-    private static final String PATTERN_WHITESPACE    = "^\\s+";
-    private static final String PATTERN_COMMENT_SINGLE = "^//.*"; // Hasta fin de línea
+    private static final String ESPACIOBLANCO    = "^\\s+";
+    private static final String COMENTARIOLINEA = "^//.*"; // Hasta fin de línea
     // Comentario multilínea: si no se encuentra "*/" se tratará luego como error
-    private static final String PATTERN_COMMENT_MULTI  = "^/\\*(?:.|\\n|\\r)*?\\*/";
+    private static final String COMENTARIOMULTILINEA  = "^/\\*(?:.|\\n|\\r)*?\\*/";
     // Literal de cadena: debe iniciar y cerrar con comillas dobles y solo permite escapes válidos
-    private static final String PATTERN_STRING         = "^\"((\\\\[\"ntbrf])|[^\"\\\\])*\"";
+    private static final String CADENA         = "^\"((\\\\[\"ntbrf])|[^\"\\\\])*\"";
     // Literal de carácter: inicia y cierra con comilla simple
-    private static final String PATTERN_CHAR           = "^'((\\\\[\"ntbrf])|[^'\\\\])'";
+    private static final String CARACTER           = "^'((\\\\[\"ntbrf])|[^'\\\\])'";
     // Número: entero o real; se utiliza lookahead negativo para evitar que se una a letras o guiones bajos
-    private static final String PATTERN_NUMBER         = "^(\\d+\\.\\d+|\\d+)(?![A-Za-z_])";
+    private static final String NUMERO         = "^(\\d+\\.\\d+|\\d+)(?![A-Za-z_])";
     // Identificador: debe iniciar con letra o guión bajo
-    private static final String PATTERN_IDENTIFIER     = "^[A-Za-z_][A-Za-z0-9_]*";
+    private static final String IDENTIFICADOR     = "^[A-Za-z_][A-Za-z0-9_]*";
     // Operadores (compuestos y simples)
-    private static final String PATTERN_OPERATOR       = "^(\\+\\+|--|==|>=|<=|!=|&&|\\|\\||\\+|-|\\*|/|\\^|#|=|>|<|!)";
+    private static final String OPERADOR       = "^(\\+\\+|--|==|>=|<=|!=|&&|\\|\\||\\+|-|\\*|/|\\^|#|=|>|<|!)";
     // Delimitadores: ; , ( ) { }
-    private static final String PATTERN_DELIMITER      = "^[;,(){}]";
+    private static final String DELIMITADOR      = "^[;,(){}]";
 
     // Compilamos los patrones
-    private final Pattern whitespacePattern    = Pattern.compile(PATTERN_WHITESPACE);
-    private final Pattern commentSinglePattern = Pattern.compile(PATTERN_COMMENT_SINGLE);
-    private final Pattern commentMultiPattern  = Pattern.compile(PATTERN_COMMENT_MULTI);
-    private final Pattern stringPattern        = Pattern.compile(PATTERN_STRING);
-    private final Pattern charPattern          = Pattern.compile(PATTERN_CHAR);
-    private final Pattern numberPattern        = Pattern.compile(PATTERN_NUMBER);
-    private final Pattern identifierPattern    = Pattern.compile(PATTERN_IDENTIFIER);
-    private final Pattern operatorPattern      = Pattern.compile(PATTERN_OPERATOR);
-    private final Pattern delimiterPattern     = Pattern.compile(PATTERN_DELIMITER);
+    private final Pattern espacioblanco = Pattern.compile(ESPACIOBLANCO);
+    private final Pattern comentariolinea = Pattern.compile(COMENTARIOLINEA);
+    private final Pattern comentariomulti  = Pattern.compile(COMENTARIOMULTILINEA);
+    private final Pattern cadena = Pattern.compile(CADENA);
+    private final Pattern caracter = Pattern.compile(CARACTER);
+    private final Pattern numero = Pattern.compile(NUMERO);
+    private final Pattern identificador = Pattern.compile(IDENTIFICADOR);
+    private final Pattern operador = Pattern.compile(OPERADOR);
+    private final Pattern delimitador     = Pattern.compile(DELIMITADOR);
     
     public LexicalAnalyzer(String input) {
         this.input = input;
@@ -66,27 +66,27 @@ public class LexicalAnalyzer {
         this.tokens = new ArrayList<>();
         this.errors = new ArrayList<>();
         this.symbolTable = new Tabla();
-        initReservedWords();
+        initpalabrasReservadas();
     }
     
     // Inicializa el mapa de palabras reservadas
-    private void initReservedWords() {
-        reservedWords = new HashMap<>();
-        reservedWords.put("int", TokenType.ENTERO);
-        reservedWords.put("double", TokenType.REAL);
-        reservedWords.put("boolean", TokenType.BOOLEANO);
-        reservedWords.put("char", TokenType.CARACTER);
-        reservedWords.put("string", TokenType.CADENA);
-        reservedWords.put("if", TokenType.IF);
-        reservedWords.put("else", TokenType.ELSE);
-        reservedWords.put("for", TokenType.FOR);
-        reservedWords.put("while", TokenType.WHILE);
-        reservedWords.put("do", TokenType.DO);
-        reservedWords.put("return", TokenType.RETURN);
-        reservedWords.put("escribir", TokenType.ESCRIBIR);
-        reservedWords.put("escribirlinea", TokenType.ESCRIBIRLINEA);
-        reservedWords.put("longitud", TokenType.LONGITUD);
-        reservedWords.put("acadena", TokenType.ACADENA);
+    private void initpalabrasReservadas() {
+        palabrasReservadas = new HashMap<>();
+        palabrasReservadas.put("entero", TokenType.ENTERO);
+        palabrasReservadas.put("real", TokenType.REAL);
+        palabrasReservadas.put("booleano", TokenType.BOOLEANO);
+        palabrasReservadas.put("caracter", TokenType.CARACTER);
+        palabrasReservadas.put("cadena", TokenType.CADENA);
+        palabrasReservadas.put("if", TokenType.IF);
+        palabrasReservadas.put("else", TokenType.ELSE);
+        palabrasReservadas.put("for", TokenType.FOR);
+        palabrasReservadas.put("while", TokenType.WHILE);
+        palabrasReservadas.put("do", TokenType.DO);
+        palabrasReservadas.put("return", TokenType.RETURN);
+        palabrasReservadas.put("escribir", TokenType.ESCRIBIR);
+        palabrasReservadas.put("escribirlinea", TokenType.ESCRIBIRLINEA);
+        palabrasReservadas.put("longitud", TokenType.LONGITUD);
+        palabrasReservadas.put("acadena", TokenType.ACADENA);
         // Agregar más según el lenguaje
     }
     
@@ -101,27 +101,27 @@ public class LexicalAnalyzer {
             int[] posInfo = getLineAndColumn(pos);
             
             // 1. Espacios en blanco (se consumen y se ignoran)
-            Matcher m = whitespacePattern.matcher(remaining);
+            Matcher m = espacioblanco.matcher(remaining);
             if (m.find()) {
                 pos += m.end();
                 continue;
             }
             
             // 2. Comentario de línea
-            m = commentSinglePattern.matcher(remaining);
+            m = comentariolinea.matcher(remaining);
             if (m.find()) {
                 String lexeme = m.group();
-                tokens.add(new Token(TokenType.COMMENT, lexeme, posInfo[0], posInfo[1]));
+                tokens.add(new Token(TokenType.COMENTARIO, lexeme, posInfo[0], posInfo[1]));
                 pos += lexeme.length();
                 continue;
             }
             
             // 3. Comentario multilínea
             if (remaining.startsWith("/*")) {
-                m = commentMultiPattern.matcher(remaining);
+                m = comentariomulti.matcher(remaining);
                 if (m.find()) {
                     String lexeme = m.group();
-                    tokens.add(new Token(TokenType.COMMENT, lexeme, posInfo[0], posInfo[1]));
+                    tokens.add(new Token(TokenType.COMENTARIO, lexeme, posInfo[0], posInfo[1]));
                     pos += lexeme.length();
                 } else {
                     // No se encontró el cierre del comentario
@@ -134,7 +134,7 @@ public class LexicalAnalyzer {
             
             // 4. Literal de cadena
             if (remaining.startsWith("\"")) {
-                m = stringPattern.matcher(remaining);
+                m = cadena.matcher(remaining);
                 if (m.find()) {
                     String lexeme = m.group();
                     // Remover las comillas de apertura y cierre
@@ -152,7 +152,7 @@ public class LexicalAnalyzer {
             
             // 5. Literal de carácter
             if (remaining.startsWith("'")) {
-                m = charPattern.matcher(remaining);
+                m = caracter.matcher(remaining);
                 if (m.find()) {
                     String lexeme = m.group();
                     String contenido = lexeme.substring(1, lexeme.length() - 1);
@@ -167,7 +167,7 @@ public class LexicalAnalyzer {
             }
             
             // 6. Número (entero o real); se evita que se unan a letras con lookahead negativo
-            m = numberPattern.matcher(remaining);
+            m = numero.matcher(remaining);
             if (m.find()) {
                 String lexeme = m.group();
                 TokenType type = lexeme.contains(".") ? TokenType.REAL_NUMBER : TokenType.NUMERO;
@@ -177,21 +177,21 @@ public class LexicalAnalyzer {
             }
             
             // 7. Identificador (o palabra reservada)
-            m = identifierPattern.matcher(remaining);
+            m = identificador.matcher(remaining);
             if (m.find()) {
                 String lexeme = m.group();
                 String lexemeLower = lexeme.toLowerCase();
-                TokenType type = reservedWords.getOrDefault(lexemeLower, TokenType.IDENTIFIER);
+                TokenType type = palabrasReservadas.getOrDefault(lexemeLower, TokenType.IDENTIFICADOR);
                 tokens.add(new Token(type, lexeme, posInfo[0], posInfo[1]));
-                if (type == TokenType.IDENTIFIER) {
-                    symbolTable.add(new Token(TokenType.IDENTIFIER, lexeme, posInfo[0], posInfo[1]));
+                if (type == TokenType.IDENTIFICADOR) {
+                    symbolTable.add(new Token(TokenType.IDENTIFICADOR, lexeme, posInfo[0], posInfo[1]));
                 }
                 pos += lexeme.length();
                 continue;
             }
             
             // 8. Operador
-            m = operatorPattern.matcher(remaining);
+            m = operador.matcher(remaining);
             if (m.find()) {
                 String lexeme = m.group();
                 TokenType type = getOperatorTokenType(lexeme);
@@ -201,7 +201,7 @@ public class LexicalAnalyzer {
             }
             
             // 9. Delimitador
-            m = delimiterPattern.matcher(remaining);
+            m = delimitador.matcher(remaining);
             if (m.find()) {
                 String lexeme = m.group();
                 TokenType type = getDelimiterTokenType(lexeme);
@@ -246,24 +246,24 @@ public class LexicalAnalyzer {
      */
     private TokenType getOperatorTokenType(String op) {
         switch(op) {
-            case "++": return TokenType.INCREMENT;
-            case "--": return TokenType.DECREMENT;
-            case "==": return TokenType.EQUALITY;
-            case ">=": return TokenType.GREATER_EQUAL;
-            case "<=": return TokenType.LESS_EQUAL;
-            case "!=": return TokenType.NOT_EQUAL;
-            case "&&": return TokenType.LOGICAL_AND;
-            case "||": return TokenType.LOGICAL_OR;
-            case "+":  return TokenType.PLUS;
-            case "-":  return TokenType.MINUS;
-            case "*":  return TokenType.MULTIPLY;
-            case "/":  return TokenType.DIVIDE;
-            case "^":  return TokenType.POWER;
+            case "++": return TokenType.INCREMENTO;
+            case "--": return TokenType.DECREMENTO;
+            case "==": return TokenType.IGUALDAD;
+            case ">=": return TokenType.MAYOR_IGUAL;
+            case "<=": return TokenType.MENOR_IGUAL;
+            case "!=": return TokenType.NO_IGUAL;
+            case "&&": return TokenType.AND;
+            case "||": return TokenType.OR;
+            case "+":  return TokenType.SUMA;
+            case "-":  return TokenType.MENOS;
+            case "*":  return TokenType.MULTIPLICAR;
+            case "/":  return TokenType.DIVIDIR;
+            case "^":  return TokenType.POTENCIA;
             case "#":  return TokenType.MODULO;
-            case "=":  return TokenType.EQUALITY; // Se podría definir otro tipo, por ejemplo ASSIGN
-            case ">":  return TokenType.GREATER_THAN;
-            case "<":  return TokenType.LESS_THAN;
-            case "!":  return TokenType.LOGICAL_NOT;
+            case "=":  return TokenType.ASIGNADOR; // Se podría definir otro tipo, por ejemplo ASSIGN
+            case ">":  return TokenType.MAYOR_QUE;
+            case "<":  return TokenType.MENOR_QUE;
+            case "!":  return TokenType.NOT;
             default:   return TokenType.ERROR;
         }
     }
@@ -275,12 +275,12 @@ public class LexicalAnalyzer {
      */
     private TokenType getDelimiterTokenType(String delim) {
         switch(delim) {
-            case ";": return TokenType.SEMICOLON;
-            case ",": return TokenType.COMMA;
-            case "(": return TokenType.OPEN_PAREN;
-            case ")": return TokenType.CLOSE_PAREN;
-            case "{": return TokenType.OPEN_BRACE;
-            case "}": return TokenType.CLOSE_BRACE;
+            case ";": return TokenType.PUNTO_COMA;
+            case ",": return TokenType.COMA;
+            case "(": return TokenType.PAREN_AB;
+            case ")": return TokenType.PAREN_CER;
+            case "{": return TokenType.LLAVE_AB;
+            case "}": return TokenType.LLAVE_CER;
             default:  return TokenType.ERROR;
         }
     }
