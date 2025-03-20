@@ -88,3 +88,23 @@ body {
   height: auto;
   filter: invert(1) brightness(100);
 }
+
+
+.top-rigth{
+  position: absolute;
+  top: 30px; 
+  right: 30px; 
+  width: 300px; 
+  padding:0;
+  margin: 0;
+}
+
+.textio{
+  font-size: 40px;
+  line-height: 1;
+  color: #fcfcfc;
+  text-align: right;
+  padding: 0;
+  margin: 0;
+  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+}
