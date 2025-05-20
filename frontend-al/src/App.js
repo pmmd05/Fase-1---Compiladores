@@ -10,6 +10,7 @@ const App = () => {
   const [code, setCode] = useState('');
   const [errors, setErrors] = useState([]);
   const [results, setResults] = useState({});
+  const [irFileName, setIrFileName] = useState(null);
 
   const handleAnalyze = async () => {
     try {
@@ -21,11 +22,15 @@ const App = () => {
       const data = await response.json();
       setErrors(data.errors || []);
       setResults(data.results || {});
+      setIrFileName(data.irFileName || null);
     } catch (error) {
       setErrors(['Error al conectar con el servidor.']);
       setResults({});
+      setIrFileName(null);
     }
   };
+
+
 
   return (
     <div>
@@ -62,6 +67,17 @@ const App = () => {
         <div className="panel right-panel">
             <ResultDisplay results={results} />
         </div>
+        { irFileName && (
+        <div style={{ marginTop: '1em' }}>
+          <a
+            href={`http://localhost:8080/api/ir/${irFileName}`}
+            download
+            className="analyze-button"
+          >
+            📄 Descargar Código Intermedio
+          </a>
+        </div>
+        )}
       </div>
     </div>
   );
