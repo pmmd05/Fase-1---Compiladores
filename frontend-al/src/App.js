@@ -3,15 +3,13 @@ import React, { useState } from 'react';
 import CodeEditor from './components/CodeEditor';
 import FileUploader from './components/FileUploader';
 import ErrorDisplay from './components/ErrorDisplay';
-import TokenDisplay from './components/TokenDisplay';
-import SymbolTableDisplay from './components/SymbolTableDisplay';
+import ResultDisplay from './components/ResultDisplay';
 import './App.css';
 
 const App = () => {
   const [code, setCode] = useState('');
   const [errors, setErrors] = useState([]);
-  const [tokens, setTokens] = useState([]);
-  const [symbolTable, setSymbolTable] = useState([]);
+  const [results, setResults] = useState({});
 
   const handleAnalyze = async () => {
     try {
@@ -22,16 +20,16 @@ const App = () => {
       });
       const data = await response.json();
       setErrors(data.errors || []);
-      setTokens(data.tokens || []);
-      setSymbolTable(data.symbolTable || []);
+      setResults(data.results || {});
     } catch (error) {
       setErrors(['Error al conectar con el servidor.']);
+      setResults({});
     }
   };
 
   return (
     <div>
-      <h1 className="title">Analizador Léxico</h1>
+      <h1 className="title">Proyecto Fase 2</h1>
       <img 
         className="image-top-left" 
         src="https://futurolandivariano.url.edu.gt/quickwebsite/img/brand/logo-azul.png" 
@@ -39,7 +37,7 @@ const App = () => {
       />
 
       <div class="top-rigth">
-        <p class="textio">Fase 1 - Proyecto Compiladores</p>
+        <p class="textio">Proyecto Compiladores</p>
       </div>
 
 
@@ -62,12 +60,7 @@ const App = () => {
 
         {/* Panel Derecho */}
         <div className="panel right-panel">
-          <div className="section">
-            <TokenDisplay tokens={tokens} />
-          </div>
-          <div>
-            <SymbolTableDisplay symbolTable={symbolTable} />
-          </div>
+            <ResultDisplay results={results} />
         </div>
       </div>
     </div>

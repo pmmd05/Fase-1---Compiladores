@@ -2,8 +2,6 @@ package com.example.sintactico;
 import org.antlr.v4.runtime.*;
 import org.antlr.v4.runtime.tree.*;
 
-
-
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 
@@ -48,6 +46,10 @@ public class main {
 
             // 5. Muestra el árbol sintáctico en forma LISP
             System.out.println(tree.toStringTree(parser));
+
+            // 6. Visita el árbol sintáctico
+            EvalVisitor evaluator = new EvalVisitor();
+            evaluator.visit(tree);
         }
     }
 }

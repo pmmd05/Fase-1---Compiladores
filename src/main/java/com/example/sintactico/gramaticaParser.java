@@ -1,6 +1,6 @@
 // Generated from gramatica.g4 by ANTLR 4.13.2
 
-    package com.example.sintactico;
+package com.example.sintactico;
 
 import org.antlr.v4.runtime.atn.*;
 import org.antlr.v4.runtime.dfa.DFA;
@@ -115,6 +115,11 @@ public class gramaticaParser extends Parser {
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof gramaticaListener ) ((gramaticaListener)listener).exitProg(this);
 		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof gramaticaVisitor ) return ((gramaticaVisitor<? extends T>)visitor).visitProg(this);
+			else return visitor.visitChildren(this);
+		}
 	}
 
 	public final ProgContext prog() throws RecognitionException {
@@ -179,6 +184,11 @@ public class gramaticaParser extends Parser {
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof gramaticaListener ) ((gramaticaListener)listener).exitStmtExpr(this);
 		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof gramaticaVisitor ) return ((gramaticaVisitor<? extends T>)visitor).visitStmtExpr(this);
+			else return visitor.visitChildren(this);
+		}
 	}
 	@SuppressWarnings("CheckReturnValue")
 	public static class StmtAssignContext extends StatementContext {
@@ -193,6 +203,11 @@ public class gramaticaParser extends Parser {
 		@Override
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof gramaticaListener ) ((gramaticaListener)listener).exitStmtAssign(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof gramaticaVisitor ) return ((gramaticaVisitor<? extends T>)visitor).visitStmtAssign(this);
+			else return visitor.visitChildren(this);
 		}
 	}
 
@@ -281,6 +296,11 @@ public class gramaticaParser extends Parser {
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof gramaticaListener ) ((gramaticaListener)listener).exitAssign(this);
 		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof gramaticaVisitor ) return ((gramaticaVisitor<? extends T>)visitor).visitAssign(this);
+			else return visitor.visitChildren(this);
+		}
 	}
 
 	public final AssignmentContext assignment() throws RecognitionException {
@@ -333,6 +353,11 @@ public class gramaticaParser extends Parser {
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof gramaticaListener ) ((gramaticaListener)listener).exitVarReference(this);
 		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof gramaticaVisitor ) return ((gramaticaVisitor<? extends T>)visitor).visitVarReference(this);
+			else return visitor.visitChildren(this);
+		}
 	}
 	@SuppressWarnings("CheckReturnValue")
 	public static class MulDivContext extends ExpressionContext {
@@ -352,6 +377,11 @@ public class gramaticaParser extends Parser {
 		@Override
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof gramaticaListener ) ((gramaticaListener)listener).exitMulDiv(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof gramaticaVisitor ) return ((gramaticaVisitor<? extends T>)visitor).visitMulDiv(this);
+			else return visitor.visitChildren(this);
 		}
 	}
 	@SuppressWarnings("CheckReturnValue")
@@ -373,6 +403,11 @@ public class gramaticaParser extends Parser {
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof gramaticaListener ) ((gramaticaListener)listener).exitAddSub(this);
 		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof gramaticaVisitor ) return ((gramaticaVisitor<? extends T>)visitor).visitAddSub(this);
+			else return visitor.visitChildren(this);
+		}
 	}
 	@SuppressWarnings("CheckReturnValue")
 	public static class ParensContext extends ExpressionContext {
@@ -389,6 +424,11 @@ public class gramaticaParser extends Parser {
 		@Override
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof gramaticaListener ) ((gramaticaListener)listener).exitParens(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof gramaticaVisitor ) return ((gramaticaVisitor<? extends T>)visitor).visitParens(this);
+			else return visitor.visitChildren(this);
 		}
 	}
 	@SuppressWarnings("CheckReturnValue")
@@ -409,6 +449,11 @@ public class gramaticaParser extends Parser {
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof gramaticaListener ) ((gramaticaListener)listener).exitPow(this);
 		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof gramaticaVisitor ) return ((gramaticaVisitor<? extends T>)visitor).visitPow(this);
+			else return visitor.visitChildren(this);
+		}
 	}
 	@SuppressWarnings("CheckReturnValue")
 	public static class UnaryMinusContext extends ExpressionContext {
@@ -425,6 +470,11 @@ public class gramaticaParser extends Parser {
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof gramaticaListener ) ((gramaticaListener)listener).exitUnaryMinus(this);
 		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof gramaticaVisitor ) return ((gramaticaVisitor<? extends T>)visitor).visitUnaryMinus(this);
+			else return visitor.visitChildren(this);
+		}
 	}
 	@SuppressWarnings("CheckReturnValue")
 	public static class NumberLiteralContext extends ExpressionContext {
@@ -437,6 +487,11 @@ public class gramaticaParser extends Parser {
 		@Override
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof gramaticaListener ) ((gramaticaListener)listener).exitNumberLiteral(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof gramaticaVisitor ) return ((gramaticaVisitor<? extends T>)visitor).visitNumberLiteral(this);
+			else return visitor.visitChildren(this);
 		}
 	}
 
