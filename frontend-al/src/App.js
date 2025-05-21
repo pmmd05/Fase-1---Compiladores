@@ -34,12 +34,14 @@ const App = () => {
 
   return (
     <div>
-      <h1 className="title">Proyecto Fase 2</h1>
+      <h1 className="title">Proyecto Compiladores-Fase 2</h1>
       <img 
         className="image-top-left" 
         src="https://futurolandivariano.url.edu.gt/quickwebsite/img/brand/logo-azul.png" 
         alt="Logo Azul" 
       />
+      <h1 className="title">-Analizador Sintáctico-n</h1>
+
 
       <div class="top-rigth">
         <p class="textio">Proyecto Compiladores</p>
