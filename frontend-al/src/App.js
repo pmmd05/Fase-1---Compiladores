@@ -58,25 +58,25 @@ const App = () => {
               Analizar Código
             </button>
           </div>
-          <div>
-            <ErrorDisplay errors={errors} />
-          </div>
         </div>
 
         {/* Panel Derecho */}
         <div className="panel right-panel">
-            <ResultDisplay results={results} />
+            {errors.length > 0
+            ? <ErrorDisplay errors={errors} />
+            : <ResultDisplay results={results} />
+          }
         </div>
-        { irFileName && (
-        <div style={{ marginTop: '1em' }}>
-          <a
-            href={`http://localhost:8080/api/ir/${irFileName}`}
-            download
-            className="analyze-button"
-          >
-            📄 Descargar Código Intermedio
-          </a>
-        </div>
+        {irFileName && (
+          <div style={{ marginTop: '1em' }}>
+            <a
+              href={`http://localhost:8080/api/ir/${irFileName}`}
+              download
+              className="download-button"
+            >
+              <span role="img" aria-label="document">📄</span> Descargar Código Intermedio
+            </a>
+          </div>
         )}
       </div>
     </div>
