@@ -3,8 +3,8 @@ import React from 'react';
 import AceEditor from 'react-ace';
 
 // Modo y tema; ajusta según tu gramática (aquí usamos Java como ejemplo)
-import 'ace-builds/src-noconflict/mode-java';
-import 'ace-builds/src-noconflict/theme-github';
+import 'ace-builds/src-noconflict/mode-java'; //Importamos el lenguaje de programación que deseamos utilizar en este caso java
+import "ace-builds/src-noconflict/theme-twilight"; //Importamos el tema de twilight para el CodeEditor
 
 const CodeEditor = ({ code, setCode }) => {
   return (
@@ -12,7 +12,7 @@ const CodeEditor = ({ code, setCode }) => {
       <h2>Código fuente</h2>
       <AceEditor
         mode="java"
-        theme="github"
+        theme="twilight"
         name="code-editor"
         width="100%"
         height="200px"
