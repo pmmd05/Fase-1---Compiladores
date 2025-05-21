@@ -40,7 +40,7 @@ const App = () => {
         src="https://futurolandivariano.url.edu.gt/quickwebsite/img/brand/logo-azul.png" 
         alt="Logo Azul" 
       />
-      <h1 className="title">-Analizador Sintáctico-n</h1>
+      <h1 className="title">-Analizador Sintáctico-</h1>
 
 
       <div class="top-rigth">
